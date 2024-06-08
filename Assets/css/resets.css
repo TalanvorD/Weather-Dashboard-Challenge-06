@@ -1,0 +1,22 @@
+/* Resets the box size for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Setting a parent height for the body to compare to */
+  html {
+    min-height: 100%;
+  }
+  
+  body { /* Baseline heigh, line height and font family */
+    min-height: 100%;
+    line-height: 1;
+    font-family: sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 { /* Resets the font size for h1, h2, etc */
+    font-size: 100%;
+  }
+  
