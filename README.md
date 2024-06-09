@@ -59,4 +59,5 @@ Weather Dashboard Screenshot:
 ![Weather Dashboard Screenshot](https://github.com/TalanvorD/Weather-Dashboard-Challenge-06/assets/164896317/0ab48356-4526-41c3-aa83-ab1d3731d78a)
 
 Repository link: https://github.com/TalanvorD/Weather-Dashboard-Challenge-06
-Live deployed link: 
+
+Live deployed link: https://talanvord.github.io/Weather-Dashboard-Challenge-06/
