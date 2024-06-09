@@ -18,6 +18,15 @@ h6 {
   font-weight: 700;
 }
 
+h1 {
+  font-size: 40px
+}
+
+h2 {
+  font-size: 20px
+  
+}
+
 Shared custom styles for headers
 .header,
 .custom-card-header,
@@ -28,4 +37,16 @@ Shared custom styles for headers
 
 .forecast-lanes { /* Setting the height on the forecast lanes */
   min-height: 30vh;
+}
+
+#first-day-forecast{
+  background-color: lightblue;
+}
+
+#five-day-forecast{
+  background-color: lightgreen;
+}
+
+#five-day-forecast-header {
+  margin-top: 6px;
 }

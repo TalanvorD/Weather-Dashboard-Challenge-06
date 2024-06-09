@@ -44,14 +44,15 @@ function generatePastButtons(){ // Builds the buttons under the search bar from 
 function renderForecast (){
     firstDayContainer.textContent = ""; // Rendering the current conditions outside of the loop because it has a different target
     const firstDayForecast = document.createElement("article"); // Creates an article to hold the current forecast entry
-    firstDayForecast.setAttribute("class", "col"); // Sets the class of the article for CSS manipulation
-    const cityTitle = document.createElement('h1'); // Creates a header for the city, date and icon
+    firstDayForecast.setAttribute("class", "col pt-3 rounded-3"); // Sets the class of the article for CSS manipulation
+    firstDayForecast.setAttribute("id", "first-day-forecast"); // Sets the id of the article for CSS manipulation
+    const cityTitle = document.createElement('h2'); // Creates a header for the city, date and icon
     let weatherIcon = document.createElement('img');
     weatherIcon.src = fiveDayForecastData.day[0].icon;
     let tempInfo = document.createElement('p');
     let windInfo = document.createElement('p');
     let humidityInfo = document.createElement('p');
-    cityTitle.textContent = `Current conditions in ${fiveDayForecastData.city} ${fiveDayForecastData.day[0].date}`;
+    cityTitle.textContent = `Current conditions in ${fiveDayForecastData.city} on ${fiveDayForecastData.day[0].date}`;
     tempInfo.textContent = `Average Temperature: ${fiveDayForecastData.day[0].temp}`;
     windInfo.textContent = `Wind: ${fiveDayForecastData.day[0].wind}`;
     humidityInfo.textContent = `Humidity: ${fiveDayForecastData.day[0].humidity}`;
@@ -67,8 +68,9 @@ function renderForecast (){
 
     for (let i = 1; i < fiveDayForecastData.day.length; i++){ // Loops through the array to create elements and render to the page
         let fiveDayForecast = document.createElement("article"); // Creates an article to hold each entry for the five day forecast
-        fiveDayForecast.setAttribute("class", "col"); // Sets the class of the article for CSS manipulation
-        dateTitle = document.createElement('h1'); // Creates a header for the date and icon
+        fiveDayForecast.setAttribute("class", "col pt-3 rounded-3"); // Sets the class of the article for CSS manipulation
+        fiveDayForecast.setAttribute("id", "five-day-forecast"); // Sets the id of the article for CSS manipulation
+        dateTitle = document.createElement('h2'); // Creates a header for the date and icon
         weatherIcon = document.createElement('img');
         weatherIcon.src = fiveDayForecastData.day[i].icon;
         tempInfo = document.createElement('p');
