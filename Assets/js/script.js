@@ -5,39 +5,44 @@ const fiveDayForecastHeader = document.querySelector('#five-day-forecast-header'
 const citySearchForm = document.querySelector('#city-search-form');
 const cityInput = document.querySelector('#city-input');
 const cityRecallForm = document.querySelector('#city-recall-form');
-const pastCityButton = document.querySelector('#past-city-button');
 const pastCitiesContainer = document.querySelector('#past-cities');
 
-let city = "";
+let city = ""; // Global variables
 let lat = "";
 let lon = "";
 let fiveDayForecastData = [];
 let storedCities = [];
 
-function init() { // Builds the buttons under the search bar from that array
-    const storedCityEntries = JSON.parse(localStorage.getItem('storedCities')); // Checks for a stored array of objects in local storage and if so sets it to the working array
+function init() {
+    const storedCityEntries = JSON.parse(localStorage.getItem('storedCities')); // Checks for a stored array in local storage and if so sets it to the working array
     if (storedCityEntries !== null) {
         storedCities = storedCityEntries;
     } else { return; }
-    
-    for (let i = 0; i < storedCities.length; i++){
-        
-    }
-
+    generatePastButtons();
   };
 
-function storeCityData(){ // Stores the city data to localStorage in a stringified object
-    let cityToStore = {
-        city: city,
-        lat: lat,
-        lon: lon
-    };
-    storedCities.push(cityToStore);
-    localStorage.setItem('storedCities', JSON.stringify(storedCities)); // Stores the object containing the 5 day forecast data for this city
+function storeCityData(){ // Stores the city data to localStorage in a stringified array
+    storedCities.push(city);
+    let dupeCitiesRemoved = storedCities.filter((value, index, array) => array.indexOf(value) === index); // Removes duplicate entries so buttons don't get repeated
+    dupeCitiesRemoved.sort();// Sorting the array
+    storedCities = dupeCitiesRemoved;
+    localStorage.setItem('storedCities', JSON.stringify(storedCities)); // Stores the array containing the previously searched cities
+    generatePastButtons();
 };
 
+function generatePastButtons(){ // Builds the buttons under the search bar from that array
+    pastCitiesContainer.textContent = ""; // Clears any previously rendered buttons from the container
+    for (let i = 0; i < storedCities.length; i++){
+        let buildCityButton = document.createElement("button"); // Creates a button for each stored city
+        buildCityButton.setAttribute("class", "btn btn-success"); // Sets the class of the article for CSS manipulation
+        buildCityButton.setAttribute("type", "submit"); // Sets the type of the button
+        buildCityButton.textContent = storedCities[i]; // Uses the entries in the storedCities array for the text
+        pastCitiesContainer.appendChild(buildCityButton); // Appends the button to the page
+    }
+}
+
 function renderForecast (){
-    firstDayContainer.textContent = "";
+    firstDayContainer.textContent = ""; // Rendering the current conditions outside of the loop because it has a different target
     const firstDayForecast = document.createElement("article"); // Creates an article to hold the current forecast entry
     firstDayForecast.setAttribute("class", "col"); // Sets the class of the article for CSS manipulation
     const cityTitle = document.createElement('h1'); // Creates a header for the city, date and icon
@@ -57,10 +62,10 @@ function renderForecast (){
     firstDayForecast.appendChild(humidityInfo);
     firstDayContainer.appendChild(firstDayForecast); // Appends the article to the page
 
-    fiveDayForecastHeader.setAttribute("class", "visible");
-    fiveDayContainer.textContent = "";
+    fiveDayForecastHeader.setAttribute("class", "visible"); // Makes the five day forecast header visible
+    fiveDayContainer.textContent = ""; // Clears the five day forecast container prior to rendering
 
-    for (let i = 1; i < fiveDayForecastData.day.length; i++){
+    for (let i = 1; i < fiveDayForecastData.day.length; i++){ // Loops through the array to create elements and render to the page
         let fiveDayForecast = document.createElement("article"); // Creates an article to hold each entry for the five day forecast
         fiveDayForecast.setAttribute("class", "col"); // Sets the class of the article for CSS manipulation
         dateTitle = document.createElement('h1'); // Creates a header for the date and icon
@@ -88,10 +93,13 @@ function getForecastLocation (input) { // Call the OpenWeather Geocoding API to 
         return response.json();
     })
     .then(function (data) {
-        city = data[0].name;
+        if (data == ""){ // Error checking the API response. It always returns okay even if the response is empty.
+            alert("The API didn't like that submission! Please check the spelling of that city.")
+        } else {
         lat = data[0].lat;
         lon = data[0].lon;
-        getWeatherForecast();
+        getWeatherForecast(); // Calls the forecast API with the acquired lat/lon coordinates
+        }
     });
 return;
 };
@@ -109,6 +117,8 @@ function getWeatherForecast() { // Calls the OpenWeather API to get the forecast
                 day: []
             }
 
+            city = data.city.name; // Setting the resolved global city variable here because the response from the forecast api is different from the geo api
+
             for (let i = 0; i < data.list.length; i+=7){ // Loops through the json response to gather data. Need to skip through to every 7th entry to get the 6 day forecast
                 let dateToParse = new Date(data.list[i].dt * 1000);
                 let parsedDate = dateToParse.toLocaleString('en-US', {year: 'numeric', month: 'numeric', day: 'numeric'});
@@ -119,7 +129,7 @@ function getWeatherForecast() { // Calls the OpenWeather API to get the forecast
                     humidity: data.list[i].main.humidity,
                     icon: "https://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + ".png"
                 }
-                forecastResponse.day.push(dayObjectToPush);
+                forecastResponse.day.push(dayObjectToPush); // Pushes the newly created forecast object to the working array
             };
             
         fiveDayForecastData = forecastResponse; // Stores the parsed response to a global variable
@@ -136,7 +146,7 @@ citySearchForm.addEventListener('submit', function (event) { // Listens for a su
       return;
     } else {  
         getForecastLocation(cityInput.value); // Calls the function to resolve the lat/lon of the city
-        cityInput.value = "";
+        cityInput.value = ""; // Clears the input field
     };
 });
 
@@ -145,5 +155,4 @@ cityRecallForm.addEventListener('click', function (event) { // Listens for a cli
     getForecastLocation(event.target.firstChild.data); // Calls the function to resolve the lat/lon of the city from the button click
 });
 
-init();
-// if (!response.ok) {console.log(errorMsg)); error checking for bad responses, probably need this for non-existant city entries
+init(); // Function to call on load, checks localStorage and renders buttons under the search form

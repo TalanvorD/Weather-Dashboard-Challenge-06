@@ -24,16 +24,12 @@
                     <form id="city-search-form">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <input id="city-input" type="text" class="form-control" placeholder="ex: San Antonio" aria-label="City" autocomplete="off"/>
+                                <input id="city-input" type="text" class="form-control" placeholder="ex: San Antonio" aria-label="City" autocomplete="off" required/>
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </li>
                         </form>
                         <form id="city-recall-form">    
                             <div class="d-grid gap-2" id="past-cities">
-                                <button type="submit" class="btn btn-success">San Diego</button>
-                                <button type="submit" class="btn btn-success">Austin</button>
-                                <button type="submit" class="btn btn-success">Boston</button>
-                                <button type="submit" class="btn btn-success">Tallahassee</button>
                             </div>
                     </form>
                 </div>
@@ -45,8 +41,8 @@
                             <div>
                                 <div class="row" id="first-day-container"></div>
                                 <div class="container text-center">
+                                    <header class="invisible" id="five-day-forecast-header"><h1>Five day forcecast:</h1></header>
                                     <div class="row gap-3" id="five-day-container">
-                                        <header class="invisible" id="five-day-forecast-header"><h1>Five day forcecast:</h1></header>
                                   </div>
                             </div>
                         </div>

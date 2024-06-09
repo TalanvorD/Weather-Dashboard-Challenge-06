@@ -26,6 +26,6 @@ Shared custom styles for headers
   color: var(--light);
 }
 
-.forecast-lanes {
+.forecast-lanes { /* Setting the height on the forecast lanes */
   min-height: 30vh;
 }
