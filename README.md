@@ -54,3 +54,9 @@ We'll need to use several loops to go through the API response to parse the data
         - Also filters the array for duplicate entries and sorting it into alphabetical order.
     - Iterates through the processed array of objects to build the HTML and CSS elements and then append them to their containers (current (first) and then 5 day forecast).
     - Recalls the previously searched city names from localStorage to create and append buttons representing the search history.
+ 
+Weather Dashboard Screenshot:
+![Weather Dashboard Screenshot](https://github.com/TalanvorD/Weather-Dashboard-Challenge-06/assets/164896317/0ab48356-4526-41c3-aa83-ab1d3731d78a)
+
+Repository link: https://github.com/TalanvorD/Weather-Dashboard-Challenge-06
+Live deployed link: 
