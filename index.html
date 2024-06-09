@@ -24,10 +24,16 @@
                     <form id="city-search-form">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <input id="city-input" type="text" class="form-control" placeholder="ex: San Antonio" aria-label="City" autocomplete="off" required/>
+                                <input id="city-input" type="text" class="form-control" placeholder="ex: San Antonio" aria-label="City" autocomplete="off"/>
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </li>
-                            <div class="d-grid row-gap-3 gap-3" id="past-cities">
+                        </form>
+                        <form id="city-recall-form">    
+                            <div class="d-grid gap-2" id="past-cities">
+                                <button type="submit" class="btn btn-success">San Diego</button>
+                                <button type="submit" class="btn btn-success">Austin</button>
+                                <button type="submit" class="btn btn-success">Boston</button>
+                                <button type="submit" class="btn btn-success">Tallahassee</button>
                             </div>
                     </form>
                 </div>

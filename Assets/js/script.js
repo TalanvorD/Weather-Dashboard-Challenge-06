@@ -4,6 +4,8 @@ const fiveDayContainer = document.querySelector('#five-day-container');
 const fiveDayForecastHeader = document.querySelector('#five-day-forecast-header');
 const citySearchForm = document.querySelector('#city-search-form');
 const cityInput = document.querySelector('#city-input');
+const cityRecallForm = document.querySelector('#city-recall-form');
+const pastCityButton = document.querySelector('#past-city-button');
 const pastCitiesContainer = document.querySelector('#past-cities');
 
 let city = "";
@@ -12,11 +14,16 @@ let lon = "";
 let fiveDayForecastData = [];
 let storedCities = [];
 
-function init() { // Checks for a stored array of objects in local storage and if so sets it to the working array
-    const storedCityEntries = JSON.parse(localStorage.getItem('storedCities'));
+function init() { // Builds the buttons under the search bar from that array
+    const storedCityEntries = JSON.parse(localStorage.getItem('storedCities')); // Checks for a stored array of objects in local storage and if so sets it to the working array
     if (storedCityEntries !== null) {
         storedCities = storedCityEntries;
+    } else { return; }
+    
+    for (let i = 0; i < storedCities.length; i++){
+        
     }
+
   };
 
 function storeCityData(){ // Stores the city data to localStorage in a stringified object
@@ -131,6 +138,11 @@ citySearchForm.addEventListener('submit', function (event) { // Listens for a su
         getForecastLocation(cityInput.value); // Calls the function to resolve the lat/lon of the city
         cityInput.value = "";
     };
+});
+
+cityRecallForm.addEventListener('click', function (event) { // Listens for a click event on a button
+    event.preventDefault(); // Stops the page from refreshing on submit
+    getForecastLocation(event.target.firstChild.data); // Calls the function to resolve the lat/lon of the city from the button click
 });
 
 init();
